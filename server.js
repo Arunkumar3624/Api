@@ -29,6 +29,8 @@ app.get("/orders", async (req, res) => {
 
     res.json(orders);
   } catch (error) {
+    console.error(error);
+
     res.status(500).json({
       message: "Error fetching orders",
       error: error.message,
@@ -58,7 +60,9 @@ app.get("/orders/:id", async (req, res) => {
     );
 
     if (order.length === 0) {
-      return res.status(404).json({ message: "Order not found" });
+      return res.status(404).json({
+        message: "Order not found",
+      });
     }
 
     const [items] = await pool.query(
@@ -82,6 +86,8 @@ app.get("/orders/:id", async (req, res) => {
       items,
     });
   } catch (error) {
+    console.error(error);
+
     res.status(500).json({
       message: "Error fetching order details",
       error: error.message,
